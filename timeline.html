@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Timeline (Glassmorphic)</title>
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .timeline-container {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .timeline {
+      position: relative;
+      margin: 0 auto;
+      padding: 2rem 0;
+      width: 100%;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2),
+                  0 0 20px rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      transform: translateX(-50%);
+      z-index: 0;
+    }
+
+    .timeline-event {
+      position: relative;
+      margin: 3rem 0;
+      width: 45%;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.6s ease;
+      z-index: 1;
+    }
+
+    .timeline-event.left {
+      left: 0;
+    }
+
+    .timeline-event.right {
+      left: 55%;
+    }
+
+    .timeline-event.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-event h3 {
+      margin-top: 0;
+      background: linear-gradient(to right, orange, red);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-size: 1.3rem;
+    }
+
+    .timeline-event p {
+      color: #ddd;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(45deg, orange, red);
+      border-radius: 50%;
+      border: 3px solid #0a0a0a;
+      box-shadow: 0 0 10px rgba(255, 100, 0, 0.6);
+      transition: top 0.3s ease;
+      z-index: 2;
+    }
+
+    .year-label {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%) translateY(-150%);
+      font-weight: bold;
+      color: #888;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.2rem 0.5rem;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+      font-size: 0.8rem;
+      z-index: 1;
+    }
+
+    h1 {
+      text-align: center;
+      background: linear-gradient(to right, orange, red);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-size: 2rem;
+      margin-bottom: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="timeline-container">
+  <h1>My Experience</h1>
+
+  <div class="timeline">
+
+    <div class="timeline-dot" id="timeline-dot"></div>
+
+    <div class="year-label" style="top: 6rem;">2020</div>
+    <div class="timeline-event left">
+      <h3>Content Creations</h3>
+      <p>I began creating animated content in January 2023, gaining 10k followers in a month. I continue improving every day.</p>
+    </div>
+
+    <div class="year-label" style="top: 16rem;">2020-2022</div>
+    <div class="timeline-event right">
+      <h3>Front-End Developer</h3>
+      <p>Learned HTML, CSS, and JavaScript. Completed projects and understood the importance of JavaScript.</p>
+    </div>
+
+    <div class="year-label" style="top: 26rem;">2022</div>
+    <div class="timeline-event left">
+      <h3>Advanced Content</h3>
+      <p>Started exploring more complex animation techniques and different content platforms.</p>
+    </div>
+
+    <div class="year-label" style="top: 36rem;">2023</div>
+    <div class="timeline-event right">
+      <h3>Professional Developer</h3>
+      <p>Started freelancing and building projects for real-world clients using modern frameworks.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const timelineDot = document.getElementById('timeline-dot');
+  const events = document.querySelectorAll('.timeline-event');
+
+  function moveDotTo(eventElement) {
+    const rect = eventElement.getBoundingClientRect();
+    const timelineRect = document.querySelector('.timeline').getBoundingClientRect();
+    const offsetTop = rect.top - timelineRect.top + rect.height / 2;
+    timelineDot.style.top = `${offsetTop}px`;
+  }
+
+  events.forEach(event => {
+    event.addEventListener('mouseenter', () => {
+      moveDotTo(event);
+    });
+  });
+
+  // FADE-IN on scroll
+  function checkVisibility() {
+    events.forEach(event => {
+      const rect = event.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) {
+        event.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', checkVisibility);
+  window.addEventListener('load', () => {
+    checkVisibility();
+    // Initially place dot on first visible event
+    const firstVisible = document.querySelector('.timeline-event.visible');
+    if (firstVisible) moveDotTo(firstVisible);
+  });
+</script>
+
+</body>
+</html>

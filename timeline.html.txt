@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline</title>
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .timeline {
+      position: relative;
+      margin: 0 auto;
+      padding: 2rem 0;
+      width: 90%;
+      max-width: 800px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: #444;
+      transform: translateX(-50%);
+    }
+
+    .timeline-event {
+      position: relative;
+      margin: 2rem 0;
+      width: 50%;
+      padding: 1rem;
+      background: #121212;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    .timeline-event.left {
+      left: 0;
+    }
+
+    .timeline-event.right {
+      left: 50%;
+      transform: translateX(10%);
+    }
+
+    .timeline-event h3 {
+      margin-top: 0;
+      color: #ccc;
+    }
+
+    .timeline-event p {
+      color: #aaa;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(45deg, orange, red);
+      border-radius: 50%;
+      border: 3px solid #0a0a0a;
+      z-index: 1;
+    }
+
+    .year-label {
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(-150%);
+      font-weight: bold;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 style="text-align:center; background: linear-gradient(to right, orange, red); -webkit-background-clip: text; color: transparent;">My Experience</h1>
+
+  <div class="timeline">
+    
+    <div class="timeline-dot"></div>
+    <div class="year-label">2020</div>
+    
+    <div class="timeline-event left">
+      <h3>Content Creations</h3>
+      <p>I began creating animated content in January 2023, gaining 10k followers in a month. I continue improving every day.</p>
+    </div>
+
+    <div class="timeline-dot"></div>
+    <div class="year-label" style="top: 12rem;">2020-2022</div>
+
+    <div class="timeline-event right">
+      <h3>Front-End Developer</h3>
+      <p>Learned HTML, CSS, and JavaScript. Completed projects and understood the importance of JavaScript.</p>
+    </div>
+
+  </div>
+
+</body>
+</html>

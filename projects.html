@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Rohit Shah</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1d1d1d;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 10px;
+            background-image: url("background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            overflow-x: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .profile-card {
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.919);
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #1e1d1d;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            height: 350px;
+            animation: profile-card 0.8s ease-out forwards;
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .profile-card::-webkit-scrollbar {
+            display: none;
+        }
+
+        @keyframes profile-card {
+            from {
+                height: 350px;
+            }
+            to {
+                height: 90%;
+            }
+        }
+
+        .header-section {
+            margin-bottom: 0px;
+            position: relative;
+        }
+
+        h1 {
+            margin: 30px;
+            font-size: 1.5em;
+            color: aliceblue;
+            transition-duration: 1s;
+        }
+
+        h1:hover {
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #2c2c2c7d;
+            color: #ffffff72;
+        }
+
+        .subtitle {
+            color: #efdaf5b2;
+            font-size: 0.9em;
+            margin: 10px 0;
+            padding: 10px;
+            margin-left: 20px;
+            transition-duration: 0.5s;
+            text-align: justify;
+        }
+
+        .subtitle:hover {
+            border-radius: 5px;
+            background-color: #2c2c2c42;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            padding: 0;
+        }
+
+        .project-card {
+            background-color: #1b1b1b71;
+            border-radius: 5px;
+            padding: 30px;
+            color: aliceblue;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            margin: 10px;
+        }
+
+        .project-card:hover {
+            background-color: #3d034b65;
+            transform: translateY(-2px);
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .project-icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #70009c, #3d034b);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 1em;
+            color: white;
+        }
+
+        .project-title {
+            font-size: 1.1em;
+            color: aliceblue;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .project-tech {
+            color: #e7b6ff;
+            font-size: 0.75em;
+            margin: 3px 0 8px 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .project-description {
+            color: #d8d2d2;
+            font-size: 0.8em;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            background-color: #1b1b1b71;
+            color: #e7b6ff;
+            padding: 6px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.8em;
+            transition: all 0.5s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .project-link:hover {
+            background-color: #3d034b81;
+        }
+
+        .project-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.7em;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .status-complete {
+            background-color: #1b1b1b71;
+            color: #00ff0083;
+        }
+
+        .status-progress {
+            background-color: #1b1b1b71;
+            color: #ffa60085;
+        }
+
+        .status-planned {
+            background-color: #1b1b1b71;
+            color: #ffff0085;
+        }
+
+        /* Flashcard Menu Styles */
+        .flashcard1 {
+            perspective: 1000px;
+            margin: 20px auto 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .flashcard1-inner {
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+        .flashcard1-back {
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 5px;
+            z-index: 11;
+        }
+
+        .flashcard1-back {
+            background-color: rgba(120, 118, 118, 0.155);
+            backdrop-filter: blur();
+            border: 1px solid rgba(175, 175, 175, 0);
+            display: list-item;
+            align-items: center;
+            justify-content: center;
+            width: 500px;
+            padding: 20px;
+            /* Removed margin-right and added margin: auto for horizontal centering */
+            margin-left: -15px;
+            margin-right: 20px;
+            transform: rotateY(180deg);
+            border-radius: 5px;
+            backdrop-filter: blur(5px);
+        }
+
+        .tile {
+            width: auto;
+            background-color: #00000072;
+            background-size: auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 1px solid #c0bdbd00;
+            border-radius: 5px;
+            padding: 40px 0px;
+            margin: 5px;
+            margin-bottom: 20px;
+            color: aliceblue;
+            transition-duration: 0.5s;
+        }
+        .tile:hover{
+            padding: 50px;
+            background-color: #3d034b81;
+        }
+        .close{
+            width: auto;
+            padding: 20px 0px;
+            margin: 10px;
+            transition-duration: 0.5s;
+            font-weight: 600;
+            font-size: 1.2em;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .close:hover{
+            background-color: rgba(255, 0, 0, 0.214);
+            border-radius: 5px;
+        }
+        .close-link{
+            background-color: transparent;
+            display: inline-block;
+            padding: 5px 30px;
+            color: rgb(210, 67, 0);
+            border-radius: 5px;
+            text-decoration: none;
+            transition-duration: 0.5s;
+        }
+        .close-link:hover{
+            color: rgb(255, 0, 0);
+            background-color: transparent;
+            padding: 15px;
+        }
+
+        .nav-link2{
+            color: #e7b6ff;
+            text-decoration: none;
+            align-items: start;
+            font-size: 1.5em;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+      
+        .blog-link {
+            background-color: #1b1b1b71;
+            border-radius: 5px;
+            padding: 10px 230px;
+            margin: 5px;
+            margin-bottom: 100px;
+            color: aliceblue;
+            transition-duration: 0.5s;
+            margin-right: 0px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .blog-link:hover {
+            background-color: #3d034b81;
+        }
+
+        .flipped .flashcard1-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            body {
+                padding: 5px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+            
+            .profile-card {
+                width: 95%;
+                max-width: none;
+                margin: 0;
+                padding: 15px;
+            }
+            
+            @keyframes profile-card {
+                from {
+                    height: 350px;
+                }
+                to {
+                    height: 85vh;
+                }
+            }
+            
+            .projects-grid {
+                gap: 12px;
+            }
+            
+            .header-section {
+                margin-bottom: 15px;
+                padding-bottom: 12px;
+            }
+            
+            h1 {
+                font-size: 1.3em;
+                margin: 20px;
+            }
+            
+            .project-card {
+                padding: 15px;
+                margin: 5px;
+            }
+            
+            .flashcard1-back {
+                width: 95%;
+                margin-left: -10px;
+                margin-right: 0;
+            }
+            
+            .tile {
+                padding: 30px 0px;
+                margin: 8px;
+                font-size: 1.2em;
+            }
+            
+            .tile:hover {
+                padding: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <div class="flashcard1">
+            <div class="flashcard1-inner">
+                <div class="flashcard1-back">
+                    <a href="index.html" class="nav-link2">
+                        <div class="tile">Home
+                        </div>
+                    </a>
+                    <a href="aboutme.html" class="nav-link2">
+                        <div class="tile">
+                            About Me
+                        </div>
+                    </a>
+                    <a href="blog.html" class="nav-link2">
+                        <div class="tile">Blog
+                        </div>
+                    </a>
+                    <div class="close">
+                        <a href="#" class="close-link">Exit</a>
+                    </div>
+                </div>
+                <div class="flashcard1-front">
+                    <div class="blog-link">Menu</div>
+                </div>
+            </div>
+        <div class="header-section">
+            <h1>projects</h1>   
+        </div>
+        <p class="subtitle">A collection of software projects I've worked on</p>
+        <div class="projects-grid">
+            <!-- Project 1: RoahOS -->
+             <!-- Know More Menu -->
+        
+        </div>
+            <div class="project-card">
+                <div class="project-status status-complete">Complete</div>
+                <div class="project-header">
+                    <div class="project-icon">🖥️</div>
+                    <div>
+                        <h3 class="project-title">RoahOS</h3>
+                        <div class="project-tech">Python • Tkinter • Custom UI</div>
+                    </div>
+                </div>
+                <p class="project-description">
+                    A custom desktop operating system interface built from scratch using Python and Tkinter. Features a modern UI with custom widgets, file management, and system monitoring capabilities.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/rnr-roah/roahos" target="_blank" class="project-link">🔗 GitHub</a>
+                    <a href="roahos/index.html" class="project-link">📱 Demo</a>
+                </div>
+            </div>
+
+            <!-- Project 2: Machine Learning Stock Predictor -->
+            <div class="project-card">
+                <div class="project-status status-progress">In Progress</div>
+                <div class="project-header">
+                    <div class="project-icon">📈</div>
+                    <div>
+                        <h3 class="project-title">ML Stock Predictor</h3>
+                        <div class="project-tech">Python • TensorFlow • Pandas • NumPy</div>
+                    </div>
+                </div>
+                <p class="project-description">
+                    A machine learning model that predicts stock prices using historical data and technical indicators. Implements LSTM neural networks and features real-time data visualization.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/rnr-roah/ml-stock-predictor" target="_blank" class="project-link">🔗 GitHub</a>
+                    <a href="https://github.com/rnr-roah/ml-stock-predictor#analysis" target="_blank" class="project-link">📊 Analysis</a>
+                </div>
+            </div>
+
+            <!-- Project 3: Cybersecurity Scanner -->
+            <div class="project-card">
+                <div class="project-status status-complete">Complete</div>
+                <div class="project-header">
+                    <div class="project-icon">🔒</div>
+                    <div>
+                        <h3 class="project-title">Network Security Scanner</h3>
+                        <div class="project-tech">Python • Nmap • Scapy • Flask</div>
+                    </div>
+                </div>
+                <p class="project-description">
+                    An automated network vulnerability scanner that identifies open ports, services, and potential security issues. Features a web dashboard for monitoring and reporting.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/rnr-roah/network-scanner" target="_blank" class="project-link">🔗 GitHub</a>
+                    <a href="https://github.com/rnr-roah/network-scanner#security-report" target="_blank" class="project-link">📋 Report</a>
+                </div>
+            </div>
+
+            <!-- Project 4: Smart Home IoT System -->
+            <div class="project-card">
+                <div class="project-status status-progress">In Progress</div>
+                <div class="project-header">
+                    <div class="project-icon">🏠</div>
+                    <div>
+                        <h3 class="project-title">Smart Home Controller</h3>
+                        <div class="project-tech">Arduino • Raspberry Pi • Node.js • React</div>
+                    </div>
+                </div>
+                <p class="project-description">
+                    An IoT-based smart home automation system with sensor monitoring, device control, and mobile app integration. Uses MQTT for communication between devices.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/rnr-roah/smart-home" target="_blank" class="project-link">🔗 GitHub</a>
+                    <a href="https://github.com/rnr-roah/smart-home#mobile-app" target="_blank" class="project-link">📱 App</a>
+                </div>
+            </div>
+
+            <!-- Project 5: Data Visualization Dashboard -->
+            <div class="project-card">
+                <div class="project-status status-complete">Complete</div>
+                <div class="project-header">
+                    <div class="project-icon">📊</div>
+                    <div>
+                        <h3 class="project-title">Data Insights Dashboard</h3>
+                        <div class="project-tech">React • D3.js • Python • FastAPI</div>
+                    </div>
+                </div>
+                <p class="project-description">
+                    An interactive data visualization dashboard that processes large datasets and creates dynamic charts and graphs. Features real-time data updates and custom filtering options.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/rnr-roah/data-dashboard" target="_blank" class="project-link">🔗 GitHub</a>
+                    <a href="https://rnr-roah.github.io/data-dashboard" target="_blank" class="project-link">🌐 Live Demo</a>
+                </div>
+            </div>
+
+            <!-- Project 6: Blockchain Voting System -->
+            <div class="project-card">
+                <div class="project-status status-planned">Planned</div>
+                <div class="project-header">
+                    <div class="project-icon">🗳️</div>
+                    <div>
+                        <h3 class="project-title">Secure Voting DApp</h3>
+                        <div class="project-tech">Solidity • Web3.js • React • Ethereum</div>
+                    </div>
+                </div>
+                <p class="project-description">
+                    A decentralized voting application built on blockchain technology to ensure transparent and tamper-proof elections. Features smart contracts and cryptographic verification.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/rnr-roah/voting-dapp#whitepaper" target="_blank" class="project-link">📋 Whitepaper</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.flashcard1').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('flipped');
+            });
+        });
+    </script>
+</body>
+</html>

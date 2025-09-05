@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About me</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1d1d1d;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 10px;
+            background-image: url("background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            overflow-x: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .profile-card {
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.919);
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #1e1d1d;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            height: 350px;
+            animation: profile-card 0.8s ease-out forwards;
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .profile-card::-webkit-scrollbar {
+            display: none;
+        }
+
+        @keyframes profile-card {
+            from {
+                height: 350px;
+            }
+            to {
+                height: 90%;
+            }
+        }
+
+        h1 {
+            margin: 30px;
+            font-size: 1.5em;
+            color: aliceblue;
+            transition-duration: 1s;
+        }
+
+        h1:hover {
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #2c2c2c7d;
+        }
+
+        h2 {
+            margin: 20px 0 15px;
+            font-size: 1.2em;
+            color: #e7b6ff;
+            transition-duration: 0.5s;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        h2:hover {
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #2c2c2c7d;
+        }
+
+        h6 {
+            color: #d8d2d2;
+            font-size: 0.9em;
+            margin: 10px 0 20px;
+            padding: 10px;
+            transition-duration: 0.5s;
+        }
+
+        h6:hover {
+            border-radius: 5px;
+            background-color: #2c2c2c42;
+        }
+
+        .intro-section {
+            background-color: #1b1b1b71;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            transition: all 0.5s ease;
+            text-align: left;
+        }
+
+        .intro-section:hover {
+            background-color: #3d034b65;
+        }
+
+        .intro-text {
+            font-size: 0.9em;
+            color: #d8d2d2;
+            line-height: 1.5;
+        }
+
+        .intro-text p {
+            margin: 10px 0;
+            padding: 5px;
+            transition-duration: 0.5s;
+        }
+
+        .intro-text p:hover {
+            border-radius: 5px;
+            background-color: #2c2c2c42;
+        }
+
+        .skills-section {
+            margin: 20px 0;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .skill-badge {
+            background-color: #1b1b1b71;
+            color: #e7b6ff;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.5s ease;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+
+        .skill-badge:hover {
+            background-color: #3d034b81;
+            transform: translateY(-2px);
+        }
+
+        .experience-section, .hobbies-section {
+            background-color: #1b1b1b71;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            transition: all 0.5s ease;
+            text-align: left;
+        }
+
+        .experience-section:hover, .hobbies-section:hover {
+            background-color: #3d034b65;
+        }
+
+        .experience-item {
+            margin: 10px 0;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            border-left: 3px solid #70009c;
+            transition: all 0.5s ease;
+        }
+
+        .experience-item:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            transform: translateX(5px);
+        }
+
+        .experience-title {
+            color: #e7b6ff;
+            font-weight: bold;
+            font-size: 1em;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .experience-details {
+            color: #d8d2d2;
+            margin-top: 5px;
+            font-size: 0.8em;
+        }
+
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .hobby-item {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .hobby-item:hover {
+            background-color: #3d034b65;
+            transform: translateY(-3px);
+        }
+
+        .hobby-icon {
+            font-size: 1.5em;
+            margin-bottom: 8px;
+        }
+
+        .hobby-name {
+            color: #e7b6ff;
+            font-weight: bold;
+            font-size: 0.9em;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .hobby-description {
+            color: #d8d2d2;
+            font-size: 0.8em;
+            margin-top: 15px;
+            padding: 10px;
+            font-style: italic;
+            transition-duration: 0.5s;
+        }
+
+        .hobby-description:hover {
+            border-radius: 5px;
+            background-color: #2c2c2c42;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 15px;
+        }
+
+        .social-links a {
+            background-color: #1b1b1b71;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.5s ease;
+        }
+
+        .social-links a:hover {
+            background-color: #3d034b81;
+            transform: scale(1.1);
+        }
+
+        .social-links img {
+            width: 30px;
+            height: 30px;
+            filter: brightness(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover img {
+            filter: brightness(1.2);
+        }
+
+        .nav-section {
+            margin-top: 30px;
+        }
+
+        .nav-link2 {
+            color: #e7b6ff;
+            text-decoration: none;
+            font-size: 1em;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .tile {
+            background-color: #1b1b1b71;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 8px 0;
+            color: aliceblue;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .tile:hover {
+            background-color: #3d034b81;
+        }
+
+        .close {
+            padding: 15px;
+            margin: 15px 0;
+            font-weight: 600;
+            font-size: 0.9em;
+            font-family: 'Courier New', Courier, monospace;
+            transition: all 0.5s ease;
+        }
+
+        .close:hover {
+            background-color: rgba(255, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .close-link {
+            background-color: transparent;
+            padding: 10px 20px;
+            color: rgb(210, 67, 0);
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.5s ease;
+        }
+
+        .close-link:hover {
+            color: rgb(255, 0, 0);
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+
+        /* Flashcard Menu Styles */
+        .flashcard1 {
+            perspective: 1000px;
+            margin: 20px auto 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .flashcard1-inner {
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .flashcard1-back {
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 5px;
+            z-index: 11;
+        }
+        .flashcard1-back {
+            background-color: rgba(120, 118, 118, 0.155);
+            backdrop-filter: blur();
+            border: 1px solid rgba(175, 175, 175, 0);
+            display: list-item;
+            align-items: center;
+            justify-content: center;
+            width: 500px;
+            padding: 20px;
+            /* Removed margin-right and added margin: auto for horizontal centering */
+            margin-left: -15px;
+            margin-right: 20px;
+            transform: rotateY(180deg);
+            border-radius: 5px;
+            backdrop-filter: blur(5px);
+        }
+
+        .tile {
+            width: auto;
+            background-color: #00000072;
+            background-size: auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 1px solid #c0bdbd00;
+            border-radius: 5px;
+            padding: 40px 0px;
+            margin: 5px;
+            margin-bottom: 20px;
+            color: aliceblue;
+            transition-duration: 0.5s;
+            font-size: 1.5em;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .tile:hover{
+            padding: 50px;
+            background-color: #3d034b81;
+        }
+        .close{
+            width: auto;
+            padding: 20px 0px;
+            margin: 10px;
+            transition-duration: 0.5s;
+            font-weight: 600;
+            font-size: 1.5em;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .close:hover{
+            background-color: rgba(255, 0, 0, 0.214);
+            border-radius: 5px;
+        }
+        .close-link{
+            background-color: transparent;
+            display: inline-block;
+            padding: 5px 30px;
+            color: rgb(210, 67, 0);
+            border-radius: 5px;
+            text-decoration: none;
+            transition-duration: 0.5s;
+        }
+        .close-link:hover{
+            color: rgb(255, 0, 0);
+            background-color: transparent;
+            padding: 15px;
+        }
+
+
+        .blog-link {
+            background-color: #3d034b5d;
+            border-radius: 5px;
+            padding: 10px 230px;
+            margin: 5px;
+            margin-bottom: 20px;
+            color: aliceblue;
+            transition-duration: 0.5s;
+            margin-right: 0px;
+            cursor: pointer;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .blog-link:hover {
+            background-color: #3d034b81;
+        }
+
+        .flipped .flashcard1-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            body {
+                padding: 5px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+            
+            .profile-card {
+                width: 95%;
+                max-width: none;
+                margin: 0;
+                padding: 15px;
+            }
+            
+            @keyframes profile-card {
+                from {
+                    height: 350px;
+                }
+                to {
+                    height: 85vh;
+                }
+            }
+
+            h1 {
+                font-size: 1.3em;
+                margin: 20px;
+            }
+
+            h2 {
+                font-size: 1.1em;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                gap: 8px;
+            }
+
+            .skill-badge {
+                padding: 6px 12px;
+                font-size: 0.7em;
+            }
+
+            .hobbies-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+
+            .flashcard1-back {
+                width: 95%;
+                margin-left: -10px;
+                margin-right: 0;
+            }
+            
+            .tile {
+                padding: 30px 0px;
+                margin: 8px;
+                font-size: 1.2em;
+            }
+            
+            .tile:hover {
+                padding: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <!-- Navigation Menu -->
+        <div class="flashcard1">
+            <div class="flashcard1-inner">
+                <div class="flashcard1-back">
+                    <a href="index.html" class="nav-link2">
+                        <div class="tile">Home</div>
+                    </a>
+                    <a href="projects.html" class="nav-link2">
+                        <div class="tile">Projects</div>
+                    </a>
+                    <a href="blog.html" class="nav-link2">
+                        <div class="tile">Blog</div>
+                    </a>
+                    <div class="close">
+                        <a href="#" class="close-link">Exit</a>
+                    </div>
+                </div>
+                <div class="flashcard1-front">
+                    <div class="blog-link">Menu</div>
+                </div>
+            </div>
+        </div>
+
+        <h1>about me</h1>
+        <h6>Software Developer & Electrical Engineering Student</h6>
+        
+        <div class="intro-section">
+            <div class="intro-text">
+                <p>Hey there! I'm Rohit Shah (Roah), a 20-year-old passionate developer originally from the beautiful landscapes of Nepal 🏔️, currently pursuing my undergraduate degree in Electrical Engineering in the United States.</p>
+                
+                <p>I had the incredible opportunity to work as a software development intern for 5 months, where I gained hands-on experience in real-world development projects. Though I had to leave that position to pursue my studies abroad, the experience taught me invaluable lessons about collaborative development, project management, and the importance of clean, maintainable code.</p>
+            </div>
+        </div>
+
+        <div class="skills-section">
+            <h2>🛠️ technical skills</h2>
+            <div class="skills-grid">
+                <div class="skill-badge">HTML5</div>
+                <div class="skill-badge">CSS3</div>
+                <div class="skill-badge">JavaScript</div>
+                <div class="skill-badge">React</div>
+                <div class="skill-badge">Python</div>
+                <div class="skill-badge">Lua</div>
+                <div class="skill-badge">Bash</div>
+            </div>
+        </div>
+
+        <div class="experience-section">
+            <h2>💼 experience</h2>
+            <div class="experience-item">
+                <div class="experience-title">Software Development Intern</div>
+                <div class="experience-details">5 months • Gained hands-on experience in collaborative development, project management, and building scalable applications</div>
+            </div>
+            <div class="experience-item">
+                <div class="experience-title">Electrical Engineering Student</div>
+                <div class="experience-details">Current • Pursuing undergraduate degree in the USA, combining hardware knowledge with software expertise</div>
+            </div>
+        </div>
+
+        <div class="hobbies-section">
+            <h2>🎨 beyond code</h2>
+            <div class="hobbies-grid">
+                <div class="hobby-item">
+                    <div class="hobby-icon">📝</div>
+                    <div class="hobby-name">Poetry</div>
+                </div>
+                <div class="hobby-item">
+                    <div class="hobby-icon">🎤</div>
+                    <div class="hobby-name">Singing</div>
+                </div>
+                <div class="hobby-item">
+                    <div class="hobby-icon">🎸</div>
+                    <div class="hobby-name">Guitar</div>
+                </div>
+                <div class="hobby-item">
+                    <div class="hobby-icon">💻</div>
+                    <div class="hobby-name">Coding</div>
+                </div>
+            </div>
+            <p class="hobby-description">
+                When I'm not debugging code or studying circuits, you'll find me strumming my guitar, penning down verses, or lost in a melody. These creative outlets keep me balanced and often inspire innovative solutions in my technical work.
+            </p>
+        </div>
+
+        <div class="social-links">
+            <a href="https://github.com/rnr-roah" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
+            </a>
+            <a href="https://www.instagram.com/rnr.roah" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        document.querySelectorAll('.flashcard1').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('flipped');
+            });
+        });
+    </script>
+</body>
+</html>

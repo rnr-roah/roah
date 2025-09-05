@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roah's Blog</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f0f0f;
+      color: white;
+      line-height: 1.6;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.85);
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      padding-bottom: 0.25rem;
+      transition: color 0.3s, border-bottom 0.3s;
+    }
+    .navbar a.active {
+      border-bottom: 2px solid #00ffcc;
+      color: #00ffcc;
+    }
+    .container {
+      padding: 6rem 2rem 2rem 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    .category {
+      margin-bottom: 2rem;
+    }
+    .category h2 {
+      border-bottom: 1px solid #555;
+      padding-bottom: 0.5rem;
+    }
+    .post {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: #1a1a1a;
+      border-left: 4px solid #00ffcc;
+    }
+    .post a {
+      color: #00ffcc;
+      font-size: 1.1rem;
+      text-decoration: none;
+    }
+    /* Markdown content styles */
+    #markdown-content {
+      background: #1a1a1a;
+      padding: 2rem;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,255,204,0.3);
+      max-width: 800px;
+      margin: 6rem auto 3rem auto;
+      overflow-wrap: break-word;
+    }
+    #markdown-content h1,
+    #markdown-content h2,
+    #markdown-content h3 {
+      color: #00ffcc;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    #markdown-content p {
+      color: white;
+      margin-bottom: 1rem;
+    }
+    #markdown-content a {
+      color: #00ffcc;
+      text-decoration: underline;
+    }
+    #markdown-content code {
+      background: #333;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+    #markdown-content pre {
+      background: #222;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    #markdown-content blockquote {
+      border-left: 4px solid #00ffcc;
+      padding-left: 1rem;
+      color: #88ffdd;
+      font-style: italic;
+      margin: 1rem 0;
+    }
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="../aboutme.html">Home</a>
+    <a id="nav-literary" onclick="showCategory('literary')">Literary</a>
+    <a id="nav-tech" onclick="showCategory('tech')">Tech</a>
+  </div>
+
+  <div class="container" id="main-container">
+    <h1>Roah's Blog</h1>
+    <p>Welcome to my thoughts. Choose your flavor.</p>
+
+    <div id="literary" class="category">
+      <h2>📝 Literary</h2>
+      <div class="post">
+        <a href="#" onclick="loadMarkdown('https://raw.githubusercontent.com/rnr-roah/blog/main/literary/16.md')">16</a>
+        <p>A poem exploring complex feelings of self harm and longing.</p>
+      </div>
+    </div>
+
+    <div id="tech" class="category" style="display: none;">
+
+      <h2>💻 Tech</h2>
+      <div class="post">
+        <a href="#" onclick="loadMarkdown('https://raw.githubusercontent.com/rnr-roah/awesome/main/README.md')">Awesome Window Manager setup</a>
+        <p>A tech post loaded directly from GitHub.</p>
+      </div>
+      
+      <div class="post">
+        <a href="#" onclick="loadMarkdown('https://raw.githubusercontent.com/rnr-roah/blog/main/tech/intro.md')">Intro</a>
+        <p>A tech post loaded directly from GitHub.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="markdown-content" class="container" style="display: none;"></div>
+
+  <div class="footer">
+    &copy; 2025 Roah. All rights reserved.
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    function showCategory(category) {
+      document.getElementById('literary').style.display = category === 'literary' ? 'block' : 'none';
+      document.getElementById('tech').style.display = category === 'tech' ? 'block' : 'none';
+      document.getElementById('main-container').style.display = 'block';
+      document.getElementById('markdown-content').style.display = 'none';
+
+      document.getElementById('nav-literary').classList.remove('active');
+      document.getElementById('nav-tech').classList.remove('active');
+      if (category === 'literary') {
+        document.getElementById('nav-literary').classList.add('active');
+      } else {
+        document.getElementById('nav-tech').classList.add('active');
+      }
+    }
+
+    function loadMarkdown(path) {
+      fetch(path)
+        .then(res => {
+          if (!res.ok) throw new Error('Network response was not ok');
+          return res.text();
+        })
+        .then(text => {
+          document.getElementById('main-container').style.display = 'none';
+          const mdContainer = document.getElementById('markdown-content');
+          mdContainer.innerHTML = marked.parse(text);
+          mdContainer.style.display = 'block';
+          // Scroll to top when content loads
+          window.scrollTo(0,0);
+        })
+        .catch(err => {
+          console.error('Failed to load markdown:', err);
+          alert('Failed to load the post. Check the console for details.');
+        });
+    }
+
+    // Initialize with Literary category active
+    showCategory('literary');
+  </script>
+</body>
+</html>
