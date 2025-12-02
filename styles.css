@@ -298,6 +298,7 @@ p:hover{
     .profile-img {
         width: 120px;
         height: 120px;
+		top: -60px;
     }
     
     h1 {
