@@ -272,7 +272,7 @@ p:hover{
 @media (max-width: 600px) {
     body {
         padding: 5px;
-        align-items: flex-start;
+        align-items: center;
         padding-top: 20px;
     }
     
