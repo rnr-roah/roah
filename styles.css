@@ -289,7 +289,7 @@ p:hover{
         margin-right: 0;
     }
 
-    .avatar-container {
+    /* .avatar-container {
         width: 120px;
         height: 120px;
         top: -60px;
@@ -299,7 +299,7 @@ p:hover{
         width: 120px;
         height: 120px;
 		top: -60px;
-    }
+    } */
     
     h1 {
         font-size: 1.2em;
