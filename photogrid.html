@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poems in a grid like instagram - rnr.roah</title>
+    
+    <style>
+        /* Basic Reset */
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background-color: #000000;
+        }
+
+        /* Header Title */
+        .header-title {
+            text-align: center;
+            padding: 20px;
+            background-color: #000000;
+            border-bottom: 1px solid #262626;
+        }
+
+        .header-title a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+
+        .header-title a:hover {
+            opacity: 0.7;
+        }
+
+        /* 📸 Grid Styling */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 10px;
+            max-width: 935px;
+            margin: 20px auto;
+        }
+
+        /* Responsive Grid */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 5px;
+                padding: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3px;
+                padding: 3px;
+            }
+
+            .header-title a {
+                font-size: 20px;
+            }
+        }
+
+        /* Post Container (The clickable thumbnail) */
+        .gallery-post {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%; /* Makes the container square */
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .gallery-post:hover {
+            transform: scale(0.98);
+        }
+
+        .gallery-post .thumbnail-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Indicator for multi-image posts */
+        .multi-indicator {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            color: white;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 2px 6px;
+            border-radius: 4px;
+            z-index: 5;
+        }
+
+        /* 🖼️ Modal Styling (Full-Screen Carousel) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: hidden; 
+        }
+
+        /* FIX 1: Modal Content Wrapper for Centering */
+        .modal-content-wrapper {
+            display: flex;
+            justify-content: center; /* Centers horizontally */
+            align-items: center; /* Centers vertically */
+            height: 100%;
+            width: 100%; 
+            position: relative;
+        }
+        
+        /* FIX 2: The Actual Image/Content Container (The white box) */
+        .modal-content {
+            position: relative;
+            background-color: #000000;
+            max-width: 700px; /* Maximum width for a clean look */
+            max-height: 90vh; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            
+            /* Enforce a square aspect ratio for the image area */
+            width: 90vh; /* Set width relative to viewport height for centering */
+            aspect-ratio: 1 / 1; 
+            
+            display: block; 
+            overflow: hidden; /* Important to hide off-screen images */
+        }
+
+        /* Responsive Modal */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95vw;
+                max-width: 95vw;
+                height: 95vw;
+            }
+        }
+        
+        /* FIX 3: Carousel Track must fill the content area */
+        .carousel-track {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+            height: 100%; /* Fills the square content box */
+            width: 100%; /* Ensure track takes full width of container */
+        }
+        
+        .carousel-track img {
+            width: 100%; /* Each image takes exactly 100% of the modal-content width */
+            height: 100%;
+            flex-shrink: 0; /* Prevents images from shrinking */
+            object-fit: cover;
+        }
+
+        /* Clickable Navigation Areas */
+        .prev-area, .next-area {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 15;
+            display: flex;
+            align-items: center;
+        }
+
+        .prev-area { 
+            left: 0; 
+            justify-content: flex-start;
+            padding-left: 20px;
+        }
+        
+        .next-area { 
+            right: 0; 
+            justify-content: flex-end;
+            padding-right: 20px;
+        }
+
+        /* Navigation Arrows */
+        .prev-btn, .next-btn {
+            color: rgb(102, 102, 102);
+            font-weight: bold;
+            font-size: 30px;
+            user-select: none;
+            background-color: transparent;
+            transition: opacity 0.2s;
+            opacity: 0.5;
+            pointer-events: none;   
+        }
+
+        .prev-area:hover .prev-btn,
+        .next-area:hover .next-btn {
+            opacity: 1;
+        }
+
+        /* Responsive Arrows */
+        @media (max-width: 768px) {
+            .prev-btn, .next-btn {
+                font-size: 24px;
+            }
+            .prev-area { padding-left: 10px; }
+            .next-area { padding-right: 10px; }
+        }
+
+        /* Close Button (X) */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 30;
+        }
+        
+        /* The 1/10 Counter Indicator */
+        .counter-indicator {
+            position: absolute;
+            /* Position relative to the centered image container */
+            bottom: 20px;
+            /* Adjust based on the max-width of the image */
+            right: calc(50% - 325px); /* 50% of screen - (700px/2 - 25px buffer) */
+            
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 15;
+            display: none;
+        }
+        
+        /* Fallback for smaller screens to keep counter on screen */
+        @media (max-width: 768px) {
+            .counter-indicator {
+                right: 20px;
+            }
+        }
+
+
+        /* Hide arrows for single-image posts in the modal */
+        .hidden { display: none !important; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header with Instagram Username -->
+    <div class="header-title">
+        <a href="https://instagram.com/rnr.roah" target="_blank" rel="noopener noreferrer">@rnr.roah</a>
+    </div>
+
+    <div class="gallery-grid">
+        <div class="gallery-post" data-batch-index="0">
+            <span class="multi-indicator">6</span>
+            <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/16a.jpg?raw=true" class="thumbnail-image">
+            <div class="batch-images" style="display: none;">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/16a.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/16b.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/16c.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/16d.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/16e.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/16f.jpg?raw=true">
+            </div>
+        </div>
+
+        <div class="gallery-post" data-batch-index="1">
+            <span class="multi-indicator">4</span>
+            <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/ba1.jpg?raw=true" class="thumbnail-image">
+            <div class="batch-images" style="display: none;">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/ba1.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/ba2.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/ba3.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/ba4.jpg?raw=true">
+            </div>
+        </div>
+
+        <div class="gallery-post" data-batch-index="2">
+            <span class="multi-indicator">6</span>
+            <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/healed1.jpg?raw=true" class="thumbnail-image">
+            <div class="batch-images" style="display: none;">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/healed1.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/healed2.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/healed3.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/healed4.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/healed5.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/healed6.jpg?raw=true">
+            </div>
+        </div>
+
+        <div class="gallery-post" data-batch-index="2">
+            <span class="multi-indicator">4</span>
+            <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/insomniac1.png?raw=true" class="thumbnail-image">
+            <div class="batch-images" style="display: none;">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/insomniac1.png?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/insomniac2.png?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/insomniac3.png?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/insomniac4.png?raw=true">
+            </div>
+        </div>
+
+        <div class="gallery-post" data-batch-index="2">
+            <span class="multi-indicator">4</span>
+            <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/pact1.jpg?raw=true" class="thumbnail-image">
+            <div class="batch-images" style="display: none;">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/pact1.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/pact2.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/pact3.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/pact4.jpg?raw=true">
+            </div>
+        </div>
+
+        <div class="gallery-post" data-batch-index="2">
+            <span class="multi-indicator">3</span>
+            <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/s1.jpg?raw=true" class="thumbnail-image">
+            <div class="batch-images" style="display: none;">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/s1.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/s2.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/s3.jpg?raw=true">
+            </div>
+        </div>
+
+        <div class="gallery-post" data-batch-index="2">
+            <span class="multi-indicator">3</span>
+            <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/mr1.jpg?raw=true" class="thumbnail-image">
+            <div class="batch-images" style="display: none;">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/mr1.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/mr2.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/mr3.jpg?raw=true">
+            </div>
+        </div>
+
+        <div class="gallery-post" data-batch-index="2">
+            <span class="multi-indicator">4</span>
+            <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/romaunt1.png?raw=true" class="thumbnail-image">
+            <div class="batch-images" style="display: none;">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/romaunt1.png?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/romaunt2.png?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/romaunt3.png?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/romaunt4.png?raw=true">
+            </div>
+        </div>
+
+        <div class="gallery-post" data-batch-index="2">
+            <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/weknew.jpg?raw=true" class="thumbnail-image">
+            <div class="batch-images" style="display: none;">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/weknew.jpg?raw=true">
+            </div>
+        </div>
+
+        <div class="gallery-post" data-batch-index="2">
+            <span class="multi-indicator">2</span>
+            <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/tdwm1.jpg?raw=true" class="thumbnail-image">
+            <div class="batch-images" style="display: none;">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/tdwm1.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/tdwm2.jpg?raw=true">
+            </div>
+        </div>
+
+        <div class="gallery-post" data-batch-index="2">
+            <span class="multi-indicator">4</span>
+            <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/why1.jpg?raw=true" class="thumbnail-image">
+            <div class="batch-images" style="display: none;">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/why1.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/why2.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/why3.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/why4.jpg?raw=true">
+            </div>
+        </div>
+
+        <div class="gallery-post" data-batch-index="2">
+            <span class="multi-indicator">3</span>
+            <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/winter1.jpg?raw=true" class="thumbnail-image">
+            <div class="batch-images" style="display: none;">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/winter1.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/winter2.jpg?raw=true">
+                <img src="https://github.com/rnr-roah/blog/blob/main/literary/Poems/winter3.jpg?raw=true">
+            </div>
+        </div>
+    </div>
+
+    <div id="gallery-modal" class="modal">
+        <span class="close-btn">&times;</span>
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="carousel-track">
+                </div>
+                <!-- Clickable areas for navigation -->
+                <div class="prev-area hidden">
+                    <span class="prev-btn">&#10094;</span>
+                </div>
+                <div class="next-area hidden">
+                    <span class="next-btn">&#10095;</span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="counter" class="counter-indicator"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const posts = document.querySelectorAll('.gallery-post');
+            const modal = document.getElementById('gallery-modal');
+            const closeBtn = document.querySelector('.close-btn');
+            const prevArea = document.querySelector('.prev-area');
+            const nextArea = document.querySelector('.next-area');
+            const track = document.querySelector('.carousel-track');
+            const counter = document.getElementById('counter');
+
+            let currentBatch = []; 
+            let currentSlide = 0;   
+
+            // Function to set the image source and update the track position
+            function updateSlide(newSlide) {
+                const totalSlides = currentBatch.length;
+
+                // Handle wrapping
+                if (newSlide < 0) {
+                    newSlide = totalSlides - 1;
+                } else if (newSlide >= totalSlides) {
+                    newSlide = 0;
+                }
+                
+                currentSlide = newSlide;
+
+                // Move the carousel track
+                const offset = -currentSlide * 100;
+                track.style.transform = `translateX(${offset}%)`;
+
+                // Update the counter
+                counter.textContent = `${currentSlide + 1}/${totalSlides}`;
+
+                // Show/Hide navigation buttons
+                if (totalSlides > 1) {
+                    counter.style.display = 'block';
+                    // Arrows are hidden/shown based on batch size
+                    prevArea.classList.remove('hidden');
+                    nextArea.classList.remove('hidden');
+                } else {
+                    counter.style.display = 'none';
+                    prevArea.classList.add('hidden');
+                    nextArea.classList.add('hidden');
+                }
+            }
+
+            // Function to load the images for the selected batch
+            function loadBatch(postElement) {
+                const batchImagesDiv = postElement.querySelector('.batch-images');
+                currentBatch = Array.from(batchImagesDiv.querySelectorAll('img'));
+                
+                // Clear the track and insert new images
+                track.innerHTML = '';
+                currentBatch.forEach(img => {
+                    track.appendChild(img.cloneNode(true));
+                });
+
+                // Remove this line - width is now controlled by CSS
+                // track.style.width = `${currentBatch.length * 100}%`;
+            }
+
+            // 1. Open Modal Handler
+            posts.forEach(post => {
+                post.addEventListener('click', () => {
+                    loadBatch(post);
+                    updateSlide(0); // Start at the first image (index 0)
+                    modal.style.display = 'flex'; // Use flex to center the wrapper
+                });
+            });
+
+            // 2. Close Modal Handler
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal || event.target.classList.contains('modal-content-wrapper')) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // 3. Navigation Handlers
+            prevArea.addEventListener('click', (event) => {
+                event.stopPropagation();
+                updateSlide(currentSlide - 1);
+            });
+
+            nextArea.addEventListener('click', (event) => {
+                event.stopPropagation();
+                updateSlide(currentSlide + 1);
+            });
+            
+            // 4. Keyboard Navigation
+            document.addEventListener('keydown', (event) => {
+                if (modal.style.display === 'flex') {
+                    if (event.key === 'ArrowLeft') {
+                        updateSlide(currentSlide - 1);
+                    } else if (event.key === 'ArrowRight') {
+                        updateSlide(currentSlide + 1);
+                    } else if (event.key === 'Escape') {
+                        modal.style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
