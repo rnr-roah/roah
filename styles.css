@@ -34,6 +34,13 @@ body {
 	transform: translateX(-50%);
 	width: 150px;
 	height: 150px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 100%;
+    background: rgba(255, 255, 255, 0.2); /* transparent layer */
+    backdrop-filter: blur(5px);          /* the actual blur */
+    -webkit-backdrop-filter: blur(5px);  /* for Safari */
+
+
 }
 
 .profile-img {
@@ -127,6 +134,7 @@ p:hover{
     transition: transform 1s;
     transform-style: preserve-3d;
     position: relative;
+    backface-visibility: hidden;
 }
 .profile-card-back {
     position: fixed;
@@ -151,6 +159,7 @@ p:hover{
 
 .profile-card:hover .profile-card-inner {
     transform: rotateY(180deg);
+    backface-visibility: hidden;
 }
 
 
@@ -210,7 +219,7 @@ p:hover{
     margin-right: 500px;
     transform: rotateY(180deg);
     border-radius: 5px;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
 }
 
 .tile {
