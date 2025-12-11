@@ -1,10 +1,11 @@
 #!/bin/bash
-dir=$(pwd)
-cd /home/roah/git-files/roah/
-echo "Enter Commit Message:"
-read ans
-git add .
-git commit -m "$ans"
-git push 
-echo "$dir"
-cd "$dir"
+(
+  cd /home/roah/git-files/roah/ || exit 1
+  echo "Enter Commit Message:"
+  read ans
+  git add .
+  git commit -m "$ans"
+  git push
+)
+# Automatically back to original directory after this block
+
