@@ -180,7 +180,8 @@ p:hover{
 
 .blog-link {
     display: inline-block;
-    margin-top: 20px;
+    margin-top: 15px;
+    margin-bottom: 10px;
     padding: 10px 15px;
     background-color: #70009c8d;
     color: rgb(178, 177, 177);
@@ -282,7 +283,8 @@ p:hover{
 }
 
 .flashcard1-back {
-    background-color: rgba(120, 118, 118, 0.155);
+    /* background-color: rgba(120, 118, 118, 0.155); */
+    background-color: #49494933;
     backdrop-filter: blur();
     border: 2px solid rgba(120, 118, 118, 0.155);
     display: list-item;
