@@ -348,7 +348,7 @@ p:hover{
         padding-top: 20px;
     }
     
-    .profile-card .map {
+    .profile-card .map .flashcard1 {
         width: 95%;
         max-width: none;
         margin: 0;
@@ -356,9 +356,6 @@ p:hover{
     }
     
   
-    .avatar-container {
-    top: -80px;
-    }
      p {
         font-size: 0.8em;
     }
