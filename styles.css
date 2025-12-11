@@ -364,7 +364,9 @@ p:hover{
         padding-top: 0px;
         height: 100vh;
     }
-    
+   .wrapper{
+    height:100vh;
+}
     .profile-card .map  {
         width: 95%;
         max-width: none;
