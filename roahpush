@@ -1,9 +1,10 @@
 #!/bin/bash
-dir='pwd'
+dir=$(pwd)
 cd /home/roah/git-files/roah/
 echo "Enter Commit Message:"
 read ans
 git add .
 git commit -m "$ans"
 git push 
-cd $dir
+echo "$dir"
+cd "$dir"
