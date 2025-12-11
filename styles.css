@@ -358,14 +358,12 @@ p:hover{
 
 /* Mobile Optimization */
 @media (max-width: 600px) {
-    body {
+    body, .wrapper {
         padding: 0px;
         align-items: center;
-        padding-top: 0px;
+		min-height:100dvh;
     }
-  .wrapper {
-position: fixed;
-} 
+  
     .profile-card .map  {
         width: 95%;
         max-width: none;
