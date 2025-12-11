@@ -362,6 +362,7 @@ p:hover{
         padding: 0px;
         align-items: center;
 		min-height:100dvh;
+		margin: 0px 5px;
     }
   
     .profile-card .map  {
