@@ -362,10 +362,10 @@ p:hover{
         padding: 0px;
         align-items: center;
         padding-top: 0px;
-        height: 100vh;
-        top: -100px;
     }
-   
+  .wrapper {
+position: fixed;
+} 
     .profile-card .map  {
         width: 95%;
         max-width: none;
