@@ -403,7 +403,7 @@ p:hover::before {
         width: 95%;
         max-width: none;
         margin: 0;
-        padding: 15px;
+        padding: 0px;
     }
     .flashcard1-back {
         width: auto;
