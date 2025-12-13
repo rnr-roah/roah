@@ -397,12 +397,14 @@ p:hover::before {
         align-items: center;
         padding-top: 0px;
 		min-height: 100dvh;
+		margin: 5px;
+		
     }
     
     .profile-card .map  {
         width: 95%;
         max-width: none;
-        margin: 5px;
+        margin: 0px;
         padding: 0px;
     }
     .flashcard1-back {
