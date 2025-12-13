@@ -392,10 +392,11 @@ p:hover::before {
 
 /* Mobile Optimization */
 @media (max-width: 600px) {
-    body {
+    body, .wrapper{
         padding: 0px;
         align-items: center;
         padding-top: 0px;
+		min-height: 100dvh;
     }
     
     .profile-card .map  {
