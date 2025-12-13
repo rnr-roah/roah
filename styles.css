@@ -124,39 +124,73 @@ h1 {
     transition-duration: 0.5s;
 }
 h1:hover{
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #2c2c2c7d;
+    color: #d277f7ad;
 }
 h6 {
     color: #777;
     font-size: 1em;
     margin: 0 15px;
     padding-bottom: 0px;
+    /* border-radius: 10px; */
+    /* border-bottom: 1px solid #77777765; */
     /*border-bottom: 1px solid #d8d2d2;*/
 }
 
 p {
     font-size: .95em;
-    color: #d8d2d2;
-    padding-bottom: 5px;
-    padding-top: 5px;
+    color: #d8d2d2e3;
     padding: 5px;
+    border: 1px solid #000000;
     border-bottom: 1px solid #555;
     transition-duration: 0.5s;
     text-align: justify;
-    margin: 0px 10px;
+    margin: 5px 10px;
     line-height: 1.2;
-
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(20px);
 }
+
 p:hover{
-    margin: 1px;
+    border: 1px solid #555;
+    color: #fff;
     border-radius: 10px;
     background-color: #2c2c2c7d;
-    color: white;
-    font-size: 0.96em;
 }
 
+
+/* p:hover{
+    border-radius: 10px; 
+   background-color: #2c2c2c7d; 
+    color: white;
+    background: #2032428e; 
+    background-image: url("map.png");
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid #203242;
+}  */
+ /* p::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("map.png");
+  background-size: cover;
+  background-position: center;
+
+  opacity: 0;
+  filter: blur(0);
+  transform: scale(1);
+
+  transition: opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease;
+  z-index: -1;
+}
+p:hover::before {
+  opacity: 1;
+  filter: blur(10px);
+  transform: scale(1.1);
+
+} */
 .social-links {
     border-bottom: 1px solid #555;
     transition-duration: 0.5s;
@@ -358,13 +392,12 @@ p:hover{
 
 /* Mobile Optimization */
 @media (max-width: 600px) {
-    body, .wrapper {
+    body {
         padding: 0px;
         align-items: center;
-		min-height:100dvh;
-		margin: 0px 5px;
+        padding-top: 0px;
     }
-  
+    
     .profile-card .map  {
         width: 95%;
         max-width: none;
