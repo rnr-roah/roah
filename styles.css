@@ -402,7 +402,7 @@ p:hover::before {
     .profile-card .map  {
         width: 95%;
         max-width: none;
-        margin: 0;
+        margin: 5px;
         padding: 0px;
     }
     .flashcard1-back {
