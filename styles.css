@@ -31,13 +31,25 @@ body{
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    padding: 10px;
+    padding: 0px;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
     overflow-x: hidden;
+    position: fixed;
 }
+@keyframes wrapper {
+            from {
+                height: 0px;
+                max-width: 0px;
+            }
+
+            to {
+                height: 100vh;
+                max-width: 1000px;
+            }
+        }
 body::before {
     content: "";
     position: fixed;
@@ -48,8 +60,18 @@ body::before {
     background-image: url("map.png");
     background-size: cover;
     background-position: center;
-    filter: blur(10px); /* adjust blur */
-    z-index: -1;         /* stay behind all content */
+    filter: blur(0px); 
+    z-index: -1;
+    animation: blur-in 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+}
+@keyframes blur-in{
+    from {
+        filter: blur(0px);
+    }
+    to {
+        filter: blur(10px);
+    }
 }
 .map {
     width: 100%;
@@ -72,7 +94,8 @@ body::before {
     display: block;
     filter: blur(20px);
     overflow: hidden;
-    animation: unblur 3s forwards;
+    animation: unblur 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
 }
 
 @keyframes unblur {
